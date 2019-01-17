@@ -23,6 +23,10 @@ npm run all
 ```
 
 
+## Credits
+
+This extension is based on the [example](https://github.com/bpmn-io/bpmn-js-custom-elements-example) provided by the bpmn.io team.  
+
 ## License
 
 MIT
