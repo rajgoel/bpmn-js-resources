@@ -16,7 +16,7 @@ To start the example execute
 npm start
 ```
 
-To build the example into the `extension` folder execute
+To build the example into the `app` folder execute
 
 ```sh
 npm run all
