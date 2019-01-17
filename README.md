@@ -10,18 +10,17 @@ To install all project dependencies execute
 npm install
 ```
 
-To start the example execute
-
-```sh
-npm start
-```
-
 To build the example into the `app` folder execute
 
 ```sh
 npm run all
 ```
 
+To start the example execute
+
+```sh
+npm start
+```
 
 ## Credits
 
