@@ -63,38 +63,61 @@ function downloadXML(filename, text) {
   document.body.removeChild(element);
 }
 
-
-function loadBPMN(event) {
-  console.log(event.target);
-  var file = event.target.files[0];
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    modeler.importXML(reader.result, function(err) {
-      if (err) {
-        modeler.container
-          .removeClass('with-diagram')
-          .addClass('with-error');
-        modeler.container.find('.error pre').text(err.message);
-        console.error(err);
-      } else {
-        modeler.container
-          .removeClass('with-error')
-          .addClass('with-diagram');
-      }
-    });
-  };
-  reader.onerror = function(err) {
-    console.log(err, err.loaded, err.loaded === 0, file);
-  };
-
-  reader.readAsText(event.target.files[0]);
+function show(content) {
+  console.log(content);
+  modeler.importXML(content, function(err) {
+    if (err) {
+      modeler.container
+        .removeClass('with-diagram')
+        .addClass('with-error');
+      modeler.container.find('.error pre').text(err.message);
+      console.error(err);
+    } else {
+      modeler.container
+        .removeClass('with-error')
+        .addClass('with-diagram');
+    }
+  });
 }
 
+
+var href = new URL(window.location.href);
+var src = href.searchParams.get('src');
+console.log(src);
+if (src) {
+  loadBPMN(src);
+}
+
+function loadBPMN(URL) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      show(xhttp.responseText);
+    }
+    else {
+      console.warn('Failed to get file. ReadyState: ' + xhttp.readyState + ', Status: ' + xhttp.status);
+    }
+  };
+  xhttp.open('GET',URL,true);
+  xhttp.send();
+}
 
 var uploadBPMN = document.getElementById('js-upload-bpmn');
 if (uploadBPMN) {
   uploadBPMN.value = '';
-  uploadBPMN.addEventListener('change', loadBPMN);
+  uploadBPMN.addEventListener('change', function(event) {
+    console.log(event.target);
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      show(reader.result);
+    };
+    reader.onerror = function(err) {
+      console.log(err,err.loaded,err.loaded === 0,file);
+    };
+
+    reader.readAsText(event.target.files[0]);
+  });
 }
 
 var downloadBPMN = document.getElementById('js-download-bpmn');
