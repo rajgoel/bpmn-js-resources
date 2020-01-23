@@ -10,18 +10,21 @@ To install all project dependencies execute
 npm install
 ```
 
+To build the example into the `app` folder execute
+
+```sh
+npm run all
+```
+
 To start the example execute
 
 ```sh
 npm start
 ```
 
-To build the example into the `extension` folder execute
+## Credits
 
-```sh
-npm run all
-```
-
+This extension is based on the [example](https://github.com/bpmn-io/bpmn-js-custom-elements-example) provided by the bpmn.io team.  
 
 ## License
 
