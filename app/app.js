@@ -63,6 +63,31 @@ function downloadXML(filename, text) {
   document.body.removeChild(element);
 }
 
+var zoomIn = document.getElementById('js-zoom-in');
+var zoomOut = document.getElementById('js-zoom-out');
+var center = document.getElementById('js-center');
+
+if (zoomIn) {
+  zoomIn.addEventListener('click', function() {
+    modeler.get('zoomScroll').stepZoom(1);
+    return false;
+  });
+}
+if (zoomOut) {
+  zoomOut.addEventListener('click', function() {
+    modeler.get('zoomScroll').stepZoom(-1);
+    return false;
+  });
+}
+
+if (center) {
+  center.addEventListener('click', function() {
+    modeler.get('canvas').zoom('fit-viewport', 'auto');
+    return false;
+  });
+}
+
+
 function show(content) {
   console.log(content);
   modeler.importXML(content, function(err) {
@@ -73,6 +98,7 @@ function show(content) {
       modeler.container.find('.error pre').text(err.message);
       console.error(err);
     } else {
+      modeler.get('canvas').zoom('fit-viewport', 'auto');
       modeler.container
         .removeClass('with-error')
         .addClass('with-diagram');
